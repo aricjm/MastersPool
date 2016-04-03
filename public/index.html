@@ -1,0 +1,389 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+	<title>Undisputed Daddies Masters Pool</title>
+</head>
+<body>
+	<div class="container" ng-controller="AppCtrl" ng-hide="mainPageHide">
+		<!--NAV BAR START -->
+		<h1>Undisputed Daddies Masters Pool</h1>
+		<div>
+			<button class="btn btn-success" ng-click="showHomePage()">Home</button>
+			<button class="btn btn-success" ng-click="showRulesPage()">Rules/Add Entry</button>
+			<button class="btn btn-success" ng-click="showAdminPage()">Admin</button>
+        </div>
+        <!--NAV BAR END -->
+
+        <!--HOME START -->
+        <div id="homePage" ng-hide="homePageHide">
+        	<br />
+        	<h2>Leaderboard</h2>
+			<table id="leaderboardTable" class="table table-hover">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Entry</th>
+							<th>Tier 1</th>
+							<th>Tier 2</th>
+							<th>Tier 3</th>
+							<th>Tier 4</th>
+							<th>Tier 5</th>
+							<th>Tier 6</th>
+							<th>Low 4 Total</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="entry in entrylist | orderBy: 'best4'">
+							<td class="text-center">{{entry.firstName}}&nbsp;{{entry.lastName}}</td>
+							<td class="text-center">{{entry.entryName}}</td>
+
+							<td class="text-center"><!--{{entry.tierOneGolfer.firstName}}&nbsp;-->{{entry.tierOneGolfer.lastName}}&nbsp;({{entry.tierOneGolfer.dayOneScore + entry.tierOneGolfer.dayTwoScore + entry.tierOneGolfer.dayThreeScore + entry.tierOneGolfer.dayFourScore}})</td>
+
+							<td class="text-center"><!--{{entry.tierTwoGolfer.firstName}}&nbsp;-->{{entry.tierTwoGolfer.lastName}}&nbsp;({{entry.tierTwoGolfer.dayOneScore + entry.tierTwoGolfer.dayTwoScore + entry.tierTwoGolfer.dayThreeScore + entry.tierTwoGolfer.dayFourScore}})</td>
+
+							<td class="text-center"><!--{{entry.tierThreeGolfer.firstName}}&nbsp;-->{{entry.tierThreeGolfer.lastName}}&nbsp;({{entry.tierThreeGolfer.dayOneScore + entry.tierThreeGolfer.dayTwoScore + entry.tierThreeGolfer.dayThreeScore + entry.tierThreeGolfer.dayFourScore}})</td>
+
+							<td class="text-center"><!--{{entry.tierFourGolfer.firstName}}&nbsp;-->{{entry.tierFourGolfer.lastName}}&nbsp;({{entry.tierFourGolfer.dayOneScore + entry.tierFourGolfer.dayTwoScore + entry.tierFourGolfer.dayThreeScore + entry.tierFourGolfer.dayFourScore}})</td>
+
+							<td class="text-center"><!--{{entry.tierFiveGolfer.firstName}}&nbsp;-->{{entry.tierFiveGolfer.lastName}}&nbsp;({{entry.tierFiveGolfer.dayOneScore + entry.tierFiveGolfer.dayTwoScore + entry.tierFiveGolfer.dayThreeScore + entry.tierFiveGolfer.dayFourScore}})</td>
+
+							<td class="text-center"><!--{{entry.tierSixGolfer.firstName}}&nbsp;-->{{entry.tierSixGolfer.lastName}}&nbsp;({{entry.tierSixGolfer.dayOneScore + entry.tierSixGolfer.dayTwoScore + entry.tierSixGolfer.dayThreeScore + entry.tierSixGolfer.dayFourScore}})</td>
+							<td class="text-center">{{entry.best4}}</td> 
+							<td class="text-center">{{entry.total}}</td>
+							
+						</tr>
+					</tbody>
+				</table>
+			<br />
+			<h2>Scores</h2>
+			<table id="golferTable" class="table table-hover" >
+				<thead>
+					<tr class="text-center">
+						<th>Golfer</th>
+						<th>Tier</th>
+						<th>Day 1 Score</th>
+						<th>Day 2 Score</th>
+						<th>Day 3 Score</th>
+						<th>Day 4 Score</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="golfer in golferlist">
+						<td>{{golfer.firstName}}&nbsp;{{golfer.lastName}}</td>
+						<td class="text-center">{{golfer.tier}}</td>
+						<td class="text-center">{{golfer.dayOneScore}}</td>
+						<td class="text-center">{{golfer.dayTwoScore}}</td>
+						<td class="text-center">{{golfer.dayThreeScore}}</td>
+						<td class="text-center">{{golfer.dayFourScore}}</td>
+						<td class="text-center">{{golfer.total}}</td>
+					</tr>
+				</tbody>
+			</table>
+        </div>
+        <!-- HOME END -->
+
+		<!-- RULES START -->
+		<div id="adminPage" ng-hide="rulesPageHide">
+			<div class="col-md-5">
+				<h2>Rules</h2>
+	            <h3>Follow the steps below:</h3>
+	            <ul>
+	                <li><h3>Cost</h3></li>
+	                <ul>
+	                    <li>Each entry cost $5</li>
+	                    <li>No max on number of entries per person</li>
+	                    <li>If entry(s) are not paid before April 7th, they will be removed</li>
+	                    <li>Pay using Venmo or in person to Aric.</li>
+	                </ul>
+	                <li><h3>How to play</h3></li>
+	                <ul>
+	                    <li>The golfers are ranked into 6 tiers</li>
+	                    <li>Pick one golfer from each tier</li>
+	                    <li>Each day your score will be the sum of your top four performing golfers, no matter the tier</li>
+	                    <li>If, after the cut, three or more of your golfers did not make the cut, they will be given the same score as the person in last</li>
+	                    <li>At the end of the tournament the entry with the lowest total score wins</li>
+	                    <li>In event of a tie, the other two golfers scores (combined) will decide the winner</li>
+	                </ul>
+	                <li><h3>Payouts</h3></li>
+	                <table>
+	                        <tr>
+	                            <th>
+	                                <ul>
+	                                    <!--<li>Day 1 Low:</li>
+	                                    <li>Day 2 Low:</li>
+	                                    <li>Day 3 Low:</li>
+	                                    <li>Day 4 Low:</li>-->
+	                                    <li>3rd Place:</li>
+	                                    <li>2nd Place:</li>
+	                                    <li>1st Place:</li>
+	                                </ul>
+	                            </th>
+	                            <th>
+	                                <ul style="list-style-type:none">
+	                                    <!--<li>5%</li>
+	                                    <li>5%</li>
+	                                    <li>5%</li>
+	                                    <li>5%</li>-->
+	                                    <li>10% of the pot</li>
+	                                    <li>20% of the pot</li>
+	                                    <li>70% of the pot</li>
+	                                </ul>
+	                            </th>
+	                        </tr>
+	                </table>
+	            </ul>
+	        </div>
+	        <div class="col-md-7 jumbotron">
+	        	<h2>Add Entry</h2>
+	        	<table class="table">
+	        		<tr>
+	        			<td>First Name:&nbsp;</td>
+	        			<td><input class="form-control" ng-model="entry.firstName"></td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td>Last Name:&nbsp;</td>
+	        			<td><input class="form-control" ng-model="entry.lastName"></td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td>Entry Name:&nbsp;</td>
+	        			<td><input class="form-control" ng-model="entry.entryName"></td>
+	        			<td>&nbsp;(ex. JohnsEntry3)</td>
+	        		</tr>
+	        		<tr>
+	        			<td>Tier 1 Golfer:&nbsp;</td>
+	        			<td>
+	        				<select ng-model="entry.tierOneGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 1}">
+	        					<option value="">--Select--</option>
+	        				</select>
+	        			</td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td>Tier 2 Golfer:&nbsp;</td>
+	        			<td>
+	        				<select ng-model="entry.tierTwoGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 2}">
+	        					<option value="">--Select--</option>
+	        				</select>
+	        			</td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td>Tier 3 Golfer:&nbsp;</td>
+	        			<td>
+	        				<select ng-model="entry.tierThreeGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 3}">
+	        					<option value="">--Select--</option>
+	        				</select>
+	        			</td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td>Tier 4 Golfer:&nbsp;</td>
+	        			<td>
+	        				<select ng-model="entry.tierFourGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 4}">
+	        					<option value="">--Select--</option>
+	        				</select>
+	        			</td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td>Tier 5 Golfer:&nbsp;</td>
+	        			<td>
+	        				<select ng-model="entry.tierFiveGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 5}">
+	        					<option value="">--Select--</option>
+	        				</select>
+	        			</td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td>Tier 6 Golfer:&nbsp;</td>
+	        			<td>
+	        				<select ng-model="entry.tierSixGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 6}">
+	        					<option value="">--Select--</option>
+	        				</select>
+	        			</td>
+	        			<td></td>
+	        		</tr>
+	        		<tr>
+	        			<td></td>
+	        			<td><button class="btn btn-success" ng-click="showConfirmSubmit()">Submit</button></td>
+	        			<td></td>
+	        		</tr>
+	        	</table>
+	        	<div ng-hide="confirmSubmitHide">
+	        		<label>Are you sure you are ready to submit this entry? &nbsp;&nbsp;</label>
+	        		<button class="btn btn-success" ng-click="validateAddEntry()">Yes</button>
+	        		<button class="btn btn-danger" ng-click="hideConfirmSubmit()">No</button>
+	        	</div>
+			</div>
+		</div>
+		<!-- RULES END -->
+
+		<!-- ADMIN START -->
+		<div id="adminPage" ng-hide="adminPageHide">
+		<br />
+			<div id="loginAdmin" ng-hide="loginAdminHide">
+				<h2>Password:</h2>
+				<div class="col-md-3">
+					<input type="password" class="form-control" ng-model="adminPassword">
+				</div>
+				<div class="col-md-6">
+					<button class="btn btn-danger" ng-click="loginToAdmin()">Enter</button>
+				</div>
+			</div>
+
+			<div id="mainAdmin" ng-hide="mainAdminHide">
+				<br />
+				<h2>Golfer Admin Table</h2>
+				<table id="golferTable" class="table table-hover">
+					<thead>
+						<tr>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Tier</th>
+							<th>Day 1 Score</th>
+							<th>Day 2 Score</th>
+							<th>Day 3 Score</th>
+							<th>Day 4 Score</th>
+							<th>Total</th>
+							<th>Made Cut?</th>
+							<th>&nbsp;</th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input class="form-control" ng-model="golfer.firstName"></td>
+							<td><input class="form-control" ng-model="golfer.lastName"></td>
+							<td><input type="number" class="form-control" ng-model="golfer.tier"></td>
+							<td><input type="number" class="form-control" ng-model="golfer.dayOneScore"></td>
+							<td><input type="number" class="form-control" ng-model="golfer.dayTwoScore"></td>
+							<td><input type="number" class="form-control" ng-model="golfer.dayThreeScore"></td>
+							<td><input type="number" class="form-control" ng-model="golfer.dayFourScore"></td>
+							<td></td>
+							<td><input type="checkbox" class="form-control" ng-model="golfer.madeCut"></td>
+							<td><button class="btn btn-primary" ng-click="addGolfer()">Add Golfer</button></td>
+							<td><button class="btn btn-info" ng-click="updateGolfer()">Update</button></td>
+						</tr>
+						<tr ng-repeat="golfer in golferlist">
+							<td>{{golfer.firstName}}</td>
+							<td>{{golfer.lastName}}</td>
+							<td>{{golfer.tier}}</td>
+							<td>{{golfer.dayOneScore}}</td>
+							<td>{{golfer.dayTwoScore}}</td>
+							<td>{{golfer.dayThreeScore}}</td>
+							<td>{{golfer.dayFourScore}}</td>
+							<td>{{golfer.dayOneScore + golfer.dayTwoScore + golfer.dayThreeScore+ golfer.dayFourScore}}</td>
+							<td>{{golfer.madeCut}}</td>
+							<td><button class="btn btn-danger" ng-click="removeGolfer(golfer._id)">Remove</button></td>
+							<td><button class="btn btn-warning" ng-click="editGolfer(golfer._id)">Edit</button></td>
+						</tr>
+					</tbody>
+				</table>
+				<br />
+				<h2>Entry Admin Table</h2>
+				<table id="entryTable" class="table table-hover">
+					<thead>
+						<tr>
+							<th>First Name</th>
+							<th>Last Name</th>
+							<th>Entry</th>
+							<th>Tier 1</th>
+							<th>Tier 2</th>
+							<th>Tier 3</th>
+							<th>Tier 4</th>
+							<th>Tier 5</th>
+							<th>Tier 6</th>
+							<th>Paid?</th>
+							<th>&nbsp;</th>
+							<th>&nbsp;</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td><input class="form-control" ng-model="entry.firstName"></td>
+						<td><input class="form-control" ng-model="entry.lastName"></td>
+						<td><input class="form-control" ng-model="entry.entryName"></td>
+						<td>
+							<select ng-model="entry.tierOneGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 1}">
+	        					<option value="">{{entry.tierOneGolfer.firstName}}&nbsp;{{entry.tierOneGolfer.lastName}}</option>
+	        				</select>
+						</td>
+						<td>
+							<select ng-model="entry.tierTwoGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 2}">
+	        					<option value="">{{entry.tierTwoGolfer.firstName}}&nbsp;{{entry.tierTwoGolfer.lastName}}</option>
+	        				</select>
+						</td>
+						<td>
+							<select ng-model="entry.tierThreeGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 3}">
+	        					<option value="">{{entry.tierThreeGolfer.firstName}}&nbsp;{{entry.tierThreeGolfer.lastName}}</option>
+	        				</select>
+						</td>
+						<td>
+							<select ng-model="entry.tierFourGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 4}">
+	        					<option value="">{{entry.tierFourGolfer.firstName}}&nbsp;{{entry.tierFourGolfer.lastName}}</option>
+	        				</select>
+						</td>
+						<td>
+							<select ng-model="entry.tierFiveGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 5}">
+	        					<option value="">{{entry.tierFiveGolfer.firstName}}&nbsp;{{entry.tierFiveGolfer.lastName}}</option>
+	        				</select>
+	        			</td>
+						<td>
+							<select ng-model="entry.tierSixGolfer" ng-options="golfer.firstName + '&nbsp;' + golfer.lastName for golfer in golferlist | filter:{tier: 6}">
+	        					<option value="">{{entry.tierSixGolfer.firstName}}&nbsp;{{entry.tierSixGolfer.lastName}}</option>
+	        				</select>
+						</td>
+						<td><input type="checkbox" class="form-control" ng-model="entry.isPaid"></td>
+						<td><button class="btn btn-primary" ng-click="addEntry()">Add Entry</button></td>
+						<td><button class="btn btn-info" ng-click="updateEntry()">Update</button></td>
+					</tr>
+						<tr ng-repeat="entry in entrylist">
+							<td>{{entry.firstName}}</td>
+							<td>{{entry.lastName}}</td>
+							<td>{{entry.entryName}}</td>
+							<td>{{entry.tierOneGolfer.firstName}}&nbsp;{{entry.tierOneGolfer.lastName}}</td>
+							<td>{{entry.tierTwoGolfer.firstName}}&nbsp;{{entry.tierTwoGolfer.lastName}}</td>
+							<td>{{entry.tierThreeGolfer.firstName}}&nbsp;{{entry.tierThreeGolfer.lastName}}</td>
+							<td>{{entry.tierFourGolfer.firstName}}&nbsp;{{entry.tierFourGolfer.lastName}}</td>
+							<td>{{entry.tierFiveGolfer.firstName}}&nbsp;{{entry.tierFiveGolfer.lastName}}</td>
+							<td>{{entry.tierSixGolfer.firstName}}&nbsp;{{entry.tierSixGolfer.lastName}}</td>
+							<td>{{entry.isPaid}}</td>
+							<td><button class="btn btn-danger" ng-click="removeEntry(entry._id)">Remove</button></td>
+							<td><button class="btn btn-warning" ng-click="editEntry(entry._id)">Edit</button></td>
+						</tr>
+					</tbody>
+				</table>
+				<br /><br />
+			</div>
+		</div>
+		<!-- ADMIN END -->
+
+
+
+	</div>
+
+<!--scripts start-->
+<!--main scripts -->
+<script src="js/main/angular.min.js"></script>
+<script src="js/main/angular-route.min.js"></script>
+<script src="js/main/jquery.js"></script>
+<!-- <script src="js/main/bootstrap.min.js"></script> -->
+
+<!--controller scripts -->
+<script src="js/controllers/controller.js"></script>
+<!-- <script src="js/controllers/AboutMeCtrl.controller.js"></script> -->
+
+
+<script type="text/javascript"></script>
+<!--scripts end-->
+</body>
+</html>
